@@ -28,8 +28,10 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Product> findProductById(@PathVariable Long id) {
-        return productService.findById(id);
+    public ResponseEntity<Object> findProductById(@PathVariable Long id) {
+        Optional<Product> product = productService.findById(id);
+        return product.<ResponseEntity<Object>>map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND));
     }
 
 }
@@ -47,12 +49,19 @@ class MarketController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Market> findMarketById(@PathVariable Long id) {
-        return marketService.findById(id);
+    public ResponseEntity<Object> findMarketById(@PathVariable Long id) {
+        Optional<Market> market = marketService.findById(id);
+        return market.<ResponseEntity<Object>>map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>("Market not found", HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/{id}/products")
-    public List<Product> findProductByMarket(@PathVariable Long id) {
-        return marketService.findProductByMarket(id);
+    public ResponseEntity<Object> findProductByMarket(@PathVariable Long id) {
+        List<Product> productList = marketService.findProductByMarket(id);
+        if (productList.isEmpty()) {
+            return new ResponseEntity<>("No products found for market with id: " + id, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(productList, HttpStatus.OK);
+        }
     }
 }
