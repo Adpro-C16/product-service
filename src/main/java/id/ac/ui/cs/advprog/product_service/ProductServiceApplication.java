@@ -37,7 +37,9 @@ public class ProductServiceApplication {
 			Product p1 = new Product("Product A", 100000, 12, m1);
 			Product p2 = new Product("Product B", 200000, 13, m2);
 			Product p3 = new Product("Product C", 300000, 14, m1);
-			productRepository.saveAll(List.of(p1,p2,p3));
+			Product p4 = new Product("Product D", 400000, 15, m1);
+			Product p5 = new Product("Product E", 500000, 16, m2);
+			productRepository.saveAll(List.of(p1,p2,p3,p4,p5));
 			marketRepository.saveAll(List.of(m1,m2));
 		};
 	}

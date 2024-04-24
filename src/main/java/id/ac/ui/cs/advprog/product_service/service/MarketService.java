@@ -1,6 +1,7 @@
 package id.ac.ui.cs.advprog.product_service.service;
 
 import id.ac.ui.cs.advprog.product_service.model.Market;
+import id.ac.ui.cs.advprog.product_service.model.Product;
 import id.ac.ui.cs.advprog.product_service.repository.MarketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,4 +25,8 @@ public class MarketService {
         return marketRepository.findById(id);
     }
 
+    // Get product from a market
+    public List<Product> findProductByMarket(@PathVariable Long id) {
+        return marketRepository.getProductFromMarket(id);
+    }
 }

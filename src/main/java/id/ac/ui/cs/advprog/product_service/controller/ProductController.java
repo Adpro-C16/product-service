@@ -50,4 +50,9 @@ class MarketController {
     public Optional<Market> findMarketById(@PathVariable Long id) {
         return marketService.findById(id);
     }
+
+    @GetMapping("/{id}/products")
+    public List<Product> findProductByMarket(@PathVariable Long id) {
+        return marketService.findProductByMarket(id);
+    }
 }
