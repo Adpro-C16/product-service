@@ -1,6 +1,8 @@
 package id.ac.ui.cs.advprog.product_service.controller;
 
+import id.ac.ui.cs.advprog.product_service.model.Market;
 import id.ac.ui.cs.advprog.product_service.model.Product;
+import id.ac.ui.cs.advprog.product_service.service.MarketService;
 import id.ac.ui.cs.advprog.product_service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,14 +22,32 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public ResponseEntity<Object> findAll() {
+    public ResponseEntity<Object> findAllProduct() {
         List<Product> productList = productService.findAll();
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Optional<Product> findById(@PathVariable Long id) {
+    public Optional<Product> findProductById(@PathVariable Long id) {
         return productService.findById(id);
     }
 
+}
+
+@RestController
+@RequestMapping("/markets")
+class MarketController {
+    @Autowired
+    private MarketService marketService;
+
+    @GetMapping
+    public ResponseEntity<Object> findAllMarket() {
+        List<Market> marketList = marketService.findAll();
+        return new ResponseEntity<>(marketList, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Market> findMarketById(@PathVariable Long id) {
+        return marketService.findById(id);
+    }
 }

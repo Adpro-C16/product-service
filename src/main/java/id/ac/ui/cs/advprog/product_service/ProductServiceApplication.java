@@ -1,6 +1,8 @@
 package id.ac.ui.cs.advprog.product_service;
 
+import id.ac.ui.cs.advprog.product_service.model.Market;
 import id.ac.ui.cs.advprog.product_service.model.Product;
+import id.ac.ui.cs.advprog.product_service.repository.MarketRepository;
 import id.ac.ui.cs.advprog.product_service.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,15 +25,20 @@ public class ProductServiceApplication {
 	@Autowired
 	ProductRepository productRepository;
 
+	@Autowired
+	MarketRepository marketRepository;
 	@Bean
 	public CommandLineRunner demoCommandLineRunner() {
 		return args -> {
 			System.out.println("Running......");
 
-			Product p1 = new Product("1", "Product A", 100000, 12);
-			Product p2 = new Product("2", "Product B", 200000, 13);
-
-			productRepository.saveAll(List.of(p1,p2));
+			Market m1 = new Market("Market satu");
+			Market m2 = new Market("Market dua");
+			Product p1 = new Product("Product A", 100000, 12, m1);
+			Product p2 = new Product("Product B", 200000, 13, m2);
+			Product p3 = new Product("Product C", 300000, 14, m1);
+			productRepository.saveAll(List.of(p1,p2,p3));
+			marketRepository.saveAll(List.of(m1,m2));
 		};
 	}
 }
