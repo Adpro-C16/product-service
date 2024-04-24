@@ -1,12 +1,6 @@
 steps:
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args:
-      - 'run'
-      - 'deploy'
-      - 'product-service'
-      - '--image'
-      - 'gcr.io/cloudrun/hello'
-      - '--region'
-      - 'asia-southeast2'
-      - '--platform'
-      - 'managed'
+  - name: 'gcr.io/cloud-builders/gradle'
+    args: ['build']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '--tag=gcr.io/$PROJECT_ID/spring-boot', '.']
+images: ['gcr.io/$PROJECT_ID/spring-boot']
