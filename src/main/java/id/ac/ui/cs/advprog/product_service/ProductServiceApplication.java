@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Bean;
 import java.util.List;
 
 @SpringBootApplication
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 public class ProductServiceApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(ProductServiceApplication.class);
