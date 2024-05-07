@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// Cuma dummy
 @Entity
 @Table(name = "markets")
 public class Market {

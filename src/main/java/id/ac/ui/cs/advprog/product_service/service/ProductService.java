@@ -28,4 +28,17 @@ public class ProductService {
     public Product addProduct(Product product) {
         return productRepository.save(product);
     }
+
+    // Update Product
+    public Product updateProduct(Long productId, Product product) {
+        Optional<Product> updatedProduct = productRepository.findById(productId);
+        if (updatedProduct.isPresent()) {
+            Product product1 = updatedProduct.get();
+            product1.setProductName(product.getProductName());
+            product1.setProductPrice(product.getProductPrice());
+            return productRepository.save(product1);
+        } else {
+            throw new IllegalArgumentException("Product not found with id: " + productId);
+        }
+    }
 }

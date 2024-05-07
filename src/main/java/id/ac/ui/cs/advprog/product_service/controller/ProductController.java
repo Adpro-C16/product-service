@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,16 @@ public class ProductController {
             return new ResponseEntity<>(addedProduct, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to add product: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/updateProduct/{id}")
+    public ResponseEntity<Object> updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
+        try {
+            Product product = productService.updateProduct(id, updatedProduct);
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 }
