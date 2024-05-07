@@ -19,15 +19,11 @@ public class Product {
     @Column(name = "productPrice")
     private int productPrice;
 
-    @Column(name = "productStock")
-    private int productStock;
-
     public Product() {}
 
-    public Product(String productName, int productPrice, int productStock, Market market) {
+    public Product(String productName, int productPrice, Market market) {
         this.productName = productName;
         this.productPrice = productPrice;
-        this.productStock = productStock;
         this.market = market;
     }
 
@@ -53,13 +49,5 @@ public class Product {
 
     public void setProductPrice(int productPrice) {
         this.productPrice = productPrice;
-    }
-
-    public int getProductStock() {
-        return productStock;
-    }
-
-    public void setProductStock(int productStock) {
-        this.productStock = productStock;
     }
 }

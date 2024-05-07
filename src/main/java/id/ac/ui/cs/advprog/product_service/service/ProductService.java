@@ -23,4 +23,9 @@ public class ProductService {
     public Optional<Product> findById(@PathVariable Long id) {
         return productRepository.findById(id);
     }
+
+    // Add Product
+    public Product addProduct(Product product) {
+        return productRepository.save(product);
+    }
 }
