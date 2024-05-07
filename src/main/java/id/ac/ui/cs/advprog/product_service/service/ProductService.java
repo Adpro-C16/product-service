@@ -41,4 +41,14 @@ public class ProductService {
             throw new IllegalArgumentException("Product not found with id: " + productId);
         }
     }
+
+    // Delete Product by ID
+    public void deleteProductById(Long productId) {
+        Optional<Product> product = productRepository.findById(productId);
+        if (product.isPresent()) {
+            productRepository.deleteProductFromMarketById(productId);
+        } else {
+            throw new IllegalArgumentException("Product not found with id: " + productId);
+        }
+    }
 }
