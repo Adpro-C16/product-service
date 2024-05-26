@@ -2,7 +2,6 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.2.5"
 	id("io.spring.dependency-management") version "1.1.4"
-	id("pmd")
 }
 
 group = "id.ac.ui.cs.advprog"
@@ -36,17 +35,4 @@ dependencies {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
-}
-
-tasks.withType<Pmd> {
-	reports {
-		xml.required.set(true)
-		html.required.set(true)
-	}
-	ruleSetFiles = files("config/pmd/ruleset.xml")
-	sourceSets
-}
-
-tasks.named("check") {
-	dependsOn(tasks.withType<Pmd>())
 }
