@@ -46,7 +46,7 @@ public class ProductService {
     public void deleteProductById(Long productId) {
         Optional<Product> product = productRepository.findById(productId);
         if (product.isPresent()) {
-            productRepository.deleteProductFromMarketById(productId);
+            productRepository.deleteById(productId);
         } else {
             throw new IllegalArgumentException("Product not found with id: " + productId);
         }
