@@ -1,7 +1,6 @@
 package id.ac.ui.cs.advprog.product_service.controller;
 
 import id.ac.ui.cs.advprog.product_service.model.Product;
-import id.ac.ui.cs.advprog.product_service.service.AuthService;
 import id.ac.ui.cs.advprog.product_service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +15,6 @@ import java.util.Optional;
 public class ProductController {
     @Autowired
     private ProductService productService;
-
-    @Autowired
-    private AuthService authService;
-
     @GetMapping
     public ResponseEntity<Object> findAllProduct() {
         List<Product> productList = productService.findAll();
