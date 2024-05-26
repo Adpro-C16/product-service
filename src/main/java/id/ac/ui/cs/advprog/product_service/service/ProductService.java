@@ -51,4 +51,8 @@ public class ProductService {
             throw new IllegalArgumentException("Product not found with id: " + productId);
         }
     }
+
+    public List<Product> findByMarketId(Long marketId) {
+        return productRepository.findByMarketId(marketId);
+    }
 }

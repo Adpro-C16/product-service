@@ -9,12 +9,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long productId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "marketId", referencedColumnName = "marketId")
-    private Market market;
-
-    @Column(name="supermarketId")
-    private Long supermarketId;
+    @Column(name="marketId")
+    private Long marketId;
 
     @Column(name = "productName")
     private String productName;
@@ -24,11 +20,10 @@ public class Product {
 
     public Product() {}
 
-    public Product(String productName, int productPrice, long supermarketId, Market market) {
+    public Product(String productName, int productPrice, long marketId) {
         this.productName = productName;
         this.productPrice = productPrice;
-        this.market = market;
-        this.supermarketId = supermarketId;
+        this.marketId = marketId;
     }
 
     public Long getProductId() {
@@ -55,11 +50,11 @@ public class Product {
         this.productPrice = productPrice;
     }
 
-    public Long getSupermarketId() {
-        return supermarketId;
+    public Long getMarketId() {
+        return marketId;
     }
 
-    public void setSupermarketId(Long supermarketId) {
-        this.supermarketId = supermarketId;
+    public void setMarketId(Long marketId) {
+        this.marketId = marketId;
     }
 }

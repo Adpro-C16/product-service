@@ -7,10 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     @Transactional
     @Modifying
     @Query("DELETE FROM Product p WHERE p.productId = :productId")
     void deleteProductFromMarketById(Long productId);
+
+    List<Product> findByMarketId(Long marketId);
 }

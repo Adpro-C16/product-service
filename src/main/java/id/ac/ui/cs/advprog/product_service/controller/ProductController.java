@@ -1,8 +1,7 @@
 package id.ac.ui.cs.advprog.product_service.controller;
 
-import id.ac.ui.cs.advprog.product_service.model.Market;
 import id.ac.ui.cs.advprog.product_service.model.Product;
-import id.ac.ui.cs.advprog.product_service.service.MarketService;
+import id.ac.ui.cs.advprog.product_service.service.AuthService;
 import id.ac.ui.cs.advprog.product_service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +18,7 @@ public class ProductController {
     private ProductService productService;
 
     @Autowired
-    private MarketService marketService;
+    private AuthService authService;
 
     @GetMapping
     public ResponseEntity<Object> findAllProduct() {
@@ -34,18 +33,18 @@ public class ProductController {
                 .orElseGet(() -> new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/supermarket/{id}")
-    public ResponseEntity<Object> findProductByMarket(@PathVariable Long id) {
-        List<Product> productList = marketService.findProductByMarket(id);
+    @GetMapping("/market/{supermarketId}")
+    public ResponseEntity<Object> findProductByMarket(@PathVariable Long supermarketId) {
+        List<Product> productList = productService.findByMarketId(supermarketId);
         if (productList.isEmpty()) {
-            return new ResponseEntity<>("No products found for market with id: " + id, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No products found for market with id: " + supermarketId, HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(productList, HttpStatus.OK);
         }
     }
 
     @PostMapping("/addProducts")
-    public ResponseEntity<Object> addProduct(@RequestHeader("Authorization") String token, @RequestBody Product product) {
+    public ResponseEntity<Object> addProduct(@RequestBody Product product) {
         try {
             Product addedProduct = productService.addProduct(product);
             return new ResponseEntity<>(addedProduct, HttpStatus.CREATED);
@@ -75,33 +74,3 @@ public class ProductController {
     }
 }
 
-// Hanya merupakan dummy
-@RestController
-@RequestMapping("/markets")
-class MarketController {
-    @Autowired
-    private MarketService marketService;
-
-    @GetMapping
-    public ResponseEntity<Object> findAllMarket() {
-        List<Market> marketList = marketService.findAll();
-        return new ResponseEntity<>(marketList, HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findMarketById(@PathVariable Long id) {
-        Optional<Market> market = marketService.findById(id);
-        return market.<ResponseEntity<Object>>map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>("Market not found", HttpStatus.NOT_FOUND));
-    }
-
-    @GetMapping("/{id}/products")
-    public ResponseEntity<Object> findProductByMarket(@PathVariable Long id) {
-        List<Product> productList = marketService.findProductByMarket(id);
-        if (productList.isEmpty()) {
-            return new ResponseEntity<>("No products found for market with id: " + id, HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(productList, HttpStatus.OK);
-        }
-    }
-}
