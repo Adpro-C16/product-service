@@ -22,8 +22,6 @@ repositories {
 	mavenCentral()
 }
 
-
-
 dependencies {
 	implementation("com.google.protobuf:protobuf-java:3.21.12") // Update to the latest version
     implementation("io.grpc:grpc-netty-shaded:1.50.2") // Update to the latest version

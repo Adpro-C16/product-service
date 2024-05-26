@@ -10,26 +10,30 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductService {
+public class ProductService implements ProductReadInterface, ProductWriteInterface, ProductMarketInterface {
     @Autowired
     private ProductRepository productRepository;
 
     // Get all product
+    @Override
     public List<Product> findAll() {
         return productRepository.findAll();
     }
 
     // Get product by id
+    @Override
     public Optional<Product> findById(@PathVariable Long id) {
         return productRepository.findById(id);
     }
 
     // Add Product
+    @Override
     public Product addProduct(Product product) {
         return productRepository.save(product);
     }
 
     // Update Product
+    @Override
     public Product updateProduct(Long productId, Product product) {
         Optional<Product> updatedProduct = productRepository.findById(productId);
         if (updatedProduct.isPresent()) {
@@ -43,6 +47,7 @@ public class ProductService {
     }
 
     // Delete Product by ID
+    @Override
     public void deleteProductById(Long productId) {
         Optional<Product> product = productRepository.findById(productId);
         if (product.isPresent()) {
@@ -52,6 +57,8 @@ public class ProductService {
         }
     }
 
+    // Find product by MarketId
+    @Override
     public List<Product> findByMarketId(Long marketId) {
         return productRepository.findByMarketId(marketId);
     }
