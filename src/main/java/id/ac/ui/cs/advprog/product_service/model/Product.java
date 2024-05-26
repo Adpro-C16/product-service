@@ -13,6 +13,9 @@ public class Product {
     @JoinColumn(name = "marketId", referencedColumnName = "marketId")
     private Market market;
 
+    @Column(name="supermarketId")
+    private Long supermarketId;
+
     @Column(name = "productName")
     private String productName;
 
@@ -21,10 +24,11 @@ public class Product {
 
     public Product() {}
 
-    public Product(String productName, int productPrice, Market market) {
+    public Product(String productName, int productPrice, long supermarketId, Market market) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.market = market;
+        this.supermarketId = supermarketId;
     }
 
     public Long getProductId() {
@@ -49,5 +53,13 @@ public class Product {
 
     public void setProductPrice(int productPrice) {
         this.productPrice = productPrice;
+    }
+
+    public Long getSupermarketId() {
+        return supermarketId;
+    }
+
+    public void setSupermarketId(Long supermarketId) {
+        this.supermarketId = supermarketId;
     }
 }

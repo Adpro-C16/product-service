@@ -7,14 +7,7 @@ import id.ac.ui.cs.advprog.product_service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +17,9 @@ import java.util.Optional;
 public class ProductController {
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private MarketService marketService;
 
     @GetMapping
     public ResponseEntity<Object> findAllProduct() {
@@ -38,8 +34,18 @@ public class ProductController {
                 .orElseGet(() -> new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/supermarket/{id}")
+    public ResponseEntity<Object> findProductByMarket(@PathVariable Long id) {
+        List<Product> productList = marketService.findProductByMarket(id);
+        if (productList.isEmpty()) {
+            return new ResponseEntity<>("No products found for market with id: " + id, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(productList, HttpStatus.OK);
+        }
+    }
+
     @PostMapping("/addProducts")
-    public ResponseEntity<Object> addProduct(@RequestBody Product product) {
+    public ResponseEntity<Object> addProduct(@RequestHeader("Authorization") String token, @RequestBody Product product) {
         try {
             Product addedProduct = productService.addProduct(product);
             return new ResponseEntity<>(addedProduct, HttpStatus.CREATED);
