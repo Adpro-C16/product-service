@@ -1,9 +1,10 @@
 package id.ac.ui.cs.advprog.product_service.controller;
 
+import id.ac.ui.cs.advprog.product_service.factory.ServiceFactory;
 import id.ac.ui.cs.advprog.product_service.model.Product;
-import id.ac.ui.cs.advprog.product_service.service.ProductMarketInterface;
 import id.ac.ui.cs.advprog.product_service.service.ProductReadInterface;
 import id.ac.ui.cs.advprog.product_service.service.ProductWriteInterface;
+import id.ac.ui.cs.advprog.product_service.service.ProductMarketInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +16,17 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    @Autowired
-    private ProductReadInterface productReadInterface;
+
+    private final ProductReadInterface productReadInterface;
+    private final ProductWriteInterface productWriteInterface;
+    private final ProductMarketInterface productMarketInterface;
 
     @Autowired
-    private ProductWriteInterface productWriteInterface;
-
-    @Autowired
-    private ProductMarketInterface productMarketInterface;
+    public ProductController(ServiceFactory serviceFactory) {
+        this.productReadInterface = serviceFactory.getProductReadInterface();
+        this.productWriteInterface = serviceFactory.getProductWriteInterface();
+        this.productMarketInterface = serviceFactory.getProductMarketInterface();
+    }
 
     @GetMapping
     public ResponseEntity<Object> findAllProduct() {
@@ -67,7 +71,7 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteProduct/{id}")
     public ResponseEntity<Object> deleteProductById(@PathVariable Long id) {
         try {
             productWriteInterface.deleteProductById(id);
